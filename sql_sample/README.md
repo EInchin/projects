@@ -23,7 +23,7 @@ The following tables contain contest data:
  ![1-4](https://user-images.githubusercontent.com/49323906/213239190-d779dc6f-71dc-4be3-badb-993b42b953ce.png)
 
 
-## SUBMISSION 1 ##
+### SUBMISSION 1 ###
 
 
 SELECT hackers.hacker_id,
@@ -59,7 +59,7 @@ You are given three tables: Students, Friends and Packages. Students contains tw
  
 Write a query to output the names of those students whose best friends got offered a higher salary than them. Names must be ordered by the salary amount offered to the best friends. It is guaranteed that no two students got same salary offer.
 
-## SUBMISSION 2 ##
+### SUBMISSION 2 ###
 
 SELECT s.name
 
@@ -88,21 +88,38 @@ Hermione decides the best way to choose is by determining the minimum number of 
 Input Format
 
 The following tables contain data on the wands in Ollivander's inventory:
+
 •	Wands: The id is the id of the wand, code is the code of the wand, coins_needed is the total number of gold galleons needed to buy the wand, and power denotes the quality of the wand (the higher the power, the better the wand is).
- 
+
+ ![3-1](https://user-images.githubusercontent.com/92373060/213663316-3fd5ae25-ebd3-48a0-ad71-74f0a6d70f14.png)
+
 •	Wands_Property: The code is the code of the wand, age is the age of the wand, and is_evil denotes whether the wand is good for the dark arts. If the value of is_evil is 0, it means that the wand is not evil. The mapping between code and age is one-one, meaning that if there are two pairs, (code1 and age1)  and (code2 and age2) , then code1≠code2 and age1≠age2.
+
+![3-2](https://user-images.githubusercontent.com/92373060/213663377-6137a24c-e256-4f48-b428-e1394afeb8ae.png)
+
  
-#### SUBMISSION 3
+### SUBMISSION 3 ###
 
 SELECT wands.id,
+
        wands_property.age,
+       
        wands.coins_needed,
+       
        wands.power
+       
 FROM wands
+
 INNER JOIN wands_property ON wands_property.code=wands.code
+
 WHERE wands.coins_needed = (SELECT MIN(W.coins_needed)
+
                         FROM wands W INNER JOIN Wands_Property WP
+                        
                         ON W.code = WP.code
+                        
                         WHERE wands.power = W.power AND 
+                        
                         wands_property.age = WP.age AND WP.is_evil = 0)
+                        
 ORDER BY wands.power DESC, wands_property.age DESC;
