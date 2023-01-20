@@ -112,14 +112,12 @@ FROM wands
 
 INNER JOIN wands_property ON wands_property.code=wands.code
 
-WHERE wands.coins_needed = (SELECT MIN(W.coins_needed)
+WHERE wands.coins_needed = (SELECT MIN(w.coins_needed)
 
-                        FROM wands W INNER JOIN Wands_Property WP
+                        FROM wands AS w INNER JOIN wands_property AS wp ON w.code = wp.code
                         
-                        ON W.code = WP.code
+                        WHERE wands.power = w.power AND 
                         
-                        WHERE wands.power = W.power AND 
-                        
-                        wands_property.age = WP.age AND WP.is_evil = 0)
+                        wands_property.age = wp.age AND wp.is_evil = 0)
                         
 ORDER BY wands.power DESC, wands_property.age DESC;
